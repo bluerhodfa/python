@@ -5,8 +5,22 @@ import socket
 import dns.resolver
 from sys import argv
 
+class termColors:
+    SUCCESS = '\033[92m'
+    WARN = '\033[91m'
+    DANGER = '\033[93m'
+    ENDC = '\033[0m'
+
+def validateArgs(args):
+    if not len(args):
+        print(f'{termColors.WARN}Required command line arguments not passed')
+        print('Please use the following format...')
+        print(f'{termColors.DANGER}$ python pydig.py <DOMAINS>{termColors.ENDC}')
+
 def main():
     domains = argv[1:]
+
+    validateArgs(domains)
 
     for domain in domains:
         print(f'-- DOMAIN: {domain}')
