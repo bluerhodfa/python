@@ -17,11 +17,7 @@ def validateArgs(args):
         print('Please use the following format...')
         print(f'{termColors.DANGER}$ python pydig.py <DOMAINS>{termColors.ENDC}')
 
-def main():
-    domains = argv[1:]
-
-    validateArgs(domains)
-
+def printDomainRecords(domains):
     for domain in domains:
         print(f'-- DOMAIN: {domain}')
         ip = dns.resolver.resolve(domain, 'A')
@@ -33,6 +29,12 @@ def main():
         fqn = domain if re.search('^www.', domain) else f'www.{domain}'
         for rdata in dns.resolver.resolve(fqn, 'CNAME'):
             print(f'CNAME: {rdata.target}')
+
+def main():
+    domains = argv[1:]
+
+    validateArgs(domains)
+    printDomainRecords(domains)
 
 if __name__ == '__main__':
     main()
